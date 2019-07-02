@@ -4,8 +4,10 @@
 #include <string.h>
 #include "ffff.tab.h"
 #include "fonct.h"
+#include "quad.h"
 extern YYSTYPE yylval;
 int line=1,col=1;
+int esp=0;
 char* p1;
 char ss[50]={ 0 };
 %}
@@ -42,16 +44,17 @@ char {col+=yyleng; return mc_char;}
 "-" {return sub;}
 "*" {return mul;}
 "/" {return divis;}
-[<>] {return supinf;}
 "==" {return eg;}
 "<=" {return infoueg;}
 ">=" {return supoueg;}
+">" {return sup;}
+"<" {return inf;}
 "!=" {return diff;}
 or {return or;}
 and {return and;}
 {comment}
-{espace} {col+=yyleng;}
-{saut} {col=1; line+=yyleng;}
+{espace} {col+=yyleng; esp++;}
+{saut} {col=1; line+=yyleng; if(esp>0) esp--;}
 
 . {printf("erreur lexicale : \" %s \" \n ligne : %d colonne : %d \n",yytext,line,col); yyterminate();}
 %%

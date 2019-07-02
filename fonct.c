@@ -1,7 +1,7 @@
 #include <string.h>
 #include <stdlib.h>
 #include <stdio.h>
-#include <fonct.h>
+#include "fonct.h"
 // un compteur global pour la table de symbole
 int CpTabSym=0;
 //une fonctione recherche: pour chercher est ce que l'entité existe ou non déjà dans la table de symbole.
@@ -15,7 +15,6 @@ while(i<CpTabSym)
 if (strcmp(entite,ts[i].NomEntite)==0) return i;
 i++;
 }
-
 return -1;
 }
 
@@ -26,7 +25,6 @@ void inserer(char entite[])
 if ( recherche(entite)==-1)
 {
 strcpy(ts[CpTabSym].NomEntite,entite); 
-//printf("lentite est %s, sont type est %s %d\n",ts[CpTabSym].NomEntite,ts[CpTabSym].TypeEntite,CpTabSym);
 CpTabSym++;
 }
 }
