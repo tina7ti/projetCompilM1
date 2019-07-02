@@ -866,7 +866,7 @@ case 12:
 YY_RULE_SETUP
 #line 38 "lex.l"
 { if (yytext[0]=='('){ p1 = yytext; strncpy(ss,p1+1,yyleng-2);} else{strcpy(ss,yytext);}
-		 if((atoi(ss)<32767) && (atoi(ss)>-32768 )){col+=yyleng; yylval.e=atoi(ss); return entier;}else {printf("erreur lexicale : \" %s \" \n ligne : %d colonne : %d\n l'entier doit etre entre -32768 et 32767 ! \n",ss,line,col); yyterminate();} }
+		 if((atoi(ss)<32767) && (atoi(ss)>-32768 )){col+=yyleng; return entier;}else {printf("erreur lexicale : \" %s \" \n ligne : %d colonne : %d\n l'entier doit etre entre -32768 et 32767 ! \n",ss,line,col); yyterminate();} }
 	YY_BREAK
 case 13:
 YY_RULE_SETUP
@@ -1974,3 +1974,4 @@ void yyfree (void * ptr )
 
 
 int yywrap() {return 1;}
+
