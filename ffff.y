@@ -21,7 +21,7 @@ int e;
 struct {int type;char* val;}NT;
 }
 
-%token <n>idf <n>entier <n>reel <n>caract mc_if mc_elif mc_else mc_while mc_for in range mc_int mc_float mc_char add sub mul divis <n>eg <n>infoueg <n>supoueg <n>sup <n>inf <n>diff <n>or <n>and <n>saut <n>espace
+%token <n>idf <e>entier <n>reel <n>caract mc_if mc_elif mc_else mc_while mc_for in range mc_int mc_float mc_char add sub mul divis <n>eg <n>infoueg <n>supoueg <n>sup <n>inf <n>diff <n>or <n>and 
 %token ':' '[' ']' '(' ')' '='
 %left or and
 %left eg infoueg supoueg sup inf diff
@@ -39,22 +39,22 @@ S : INST {printf(" \n programme syntaxiquement juste \n");YYACCEPT;}
 INST : AFFEC INST | EXP INST | COND INST | AFFEC | EXP | COND 
 ;
 AFFEC : idf '=' idf {create("=",$3," ",$1);}
-	| idf '=' entier {create("=",$3," ",$1);}
+	| idf '=' entier {create("=",convert($3)," ",$1);}
 	| idf '=' EXP {create("=",$3.val," ",$1);}
 ;
-COND : mc_if '(' COMP ')' saut espace INST { esp1+= strlen($6); if(esp1 != esp) printf("error de if"); quadFinIF();}
-	| mc_if '(' COMP ')' saut espace INST saut espace mc_elif '(' COMP ')' saut espace INST
+COND : mc_if '(' COMP ')' INST { esp1++; if(esp1 != esp) printf("error de if"); quadFinIF();}
+	| mc_if '(' COMP ')' INST mc_elif '(' COMP ')' INST
 ;
-COMP : idf CO idf {quadComp($2,$1,$3);}
-	| idf CO entier {quadComp($2,$1,$3);}
-	| entier CO idf {quadComp($2,$1,$3);}
+COMP : idf CO idf { quadComp($2,$1,$3); printf("%s",$2); }
+	| idf CO entier { quadComp($2,$1,convert($3));}
+	| entier CO idf { quadComp($2,convert($1),$3);}
 ;
-CO : eg 
-	| infoueg 
-	| supoueg 
-	| diff
-	| sup
-	| inf
+CO : eg { $$ = strdup($1);}
+	| infoueg { $$ = strdup($1);}
+	| supoueg { $$ = strdup($1);}
+	| diff { $$ = strdup($1);}
+	| sup { $$ = strdup($1);}
+	| inf { $$ = strdup($1);}
 ;
 EXP : idf OP idf 
 	| entier OP entier
@@ -65,8 +65,8 @@ OP : add
 	| sub 
 	| mul 
 ;
-DIVI : idf divis entier  {if ($3==0) {printf("erreur a la ligne %d colonne %d : division par zero interdit\n", line,col);}else{create("/",$1,$3,$$.val);}} 	
-	| entier divis entier {if ($3==0){ printf("erreur a la ligne %d colonne %d: division par zero interdit\n", line,col);}else{create("/",$1,$3,$$.val);}} 	
+DIVI : idf divis entier  {if ($3==0) {printf("erreur a la ligne %d colonne %d : division par zero interdit\n", line,col);}else{create("/",$1,convert($3),$$.val);}} 	
+	| entier divis entier {if ($3==0){ printf("erreur a la ligne %d colonne %d: division par zero interdit\n", line,col);}else{create("/",convert($1),convert($3),$$.val);}} 	
 	| idf divis idf {if ($3==0){ printf("erreur a la ligne %d colonne %d: division par zero interdit\n", line,col);}else{create("/",$1,$3,$$.val);}} 
 ;
 %%

@@ -1,1 +1,4 @@
 Ihjdhs = 5764
+Ujjsd = Plkjd
+if (Ujk == 0)
+	Ohds = Gjd

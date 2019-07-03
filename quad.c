@@ -43,30 +43,37 @@ char* convert(int i){
 void quadComp(char* opr,char* op1,char* op2)
 {
 	create(opr,op1,op2,"");
-	if( strcmp(opr,"==") == 0)
+	
+	if( strcmp(opr,"=="))
 	{
 		create("BNZ","","","");
-	}	
-	if( strcmp(opr,"!=") == 0)
+	}else
+	{
+		if( strcmp(opr,"!="))
 	{
 		create("BZ","","","");
-	}
-	if( strcmp(opr,">") == 0)
+	}else
+	{
+		if( strcmp(opr,">"))
 	{
 		create("BLE","","","");
-	}	
-	if( strcmp(opr,"<") == 0)
+	}else
+	{
+		if( strcmp(opr,"<"))
 	{
 		create("BGE","","","");
-	}	
-	if( strcmp(opr,">=") == 0)
+	}else
+	{
+		if( strcmp(opr,">="))
 	{
 		create("BL","","","");
-	}	
-	if( strcmp(opr,"<=") == 0)
+	}else
+	{
+		if( strcmp(opr,"<="))
 	{
 		create("BG","","","");
-	}		
+	}	}	}	}	}	}	
+	
 	indBR = ind-1;
 }
 // quad de la fin d If
