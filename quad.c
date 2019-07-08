@@ -42,7 +42,7 @@ char* convert(int i){
 //quad pour les comparaisons
 void quadComp(char* opr,char* op1,char* op2)
 {
-	create(opr,op1,op2,"");
+	//create(opr,op1,op2,"");
 	
 	if( strcmp(opr,"=="))
 	{

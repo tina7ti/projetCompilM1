@@ -1308,19 +1308,19 @@ yyreduce:
 
   case 14:
 #line 48 "ffff.y" /* yacc.c:1646  */
-    { quadComp((yyvsp[-1].n),(yyvsp[-2].n),(yyvsp[0].n)); printf("%s",(yyvsp[-1].n)); }
+    { printf("%s",(yyvsp[-1].n)); create((yyvsp[-1].n),(yyvsp[-2].n),(yyvsp[0].n),""); quadComp((yyvsp[-1].n),(yyvsp[-2].n),(yyvsp[0].n)); }
 #line 1313 "ffff.tab.c" /* yacc.c:1646  */
     break;
 
   case 15:
 #line 49 "ffff.y" /* yacc.c:1646  */
-    { quadComp((yyvsp[-1].n),(yyvsp[-2].n),convert((yyvsp[0].e)));}
+    { create((yyvsp[-1].n),(yyvsp[-2].n),convert((yyvsp[0].e)),""); quadComp((yyvsp[-1].n),(yyvsp[-2].n),convert((yyvsp[0].e)));}
 #line 1319 "ffff.tab.c" /* yacc.c:1646  */
     break;
 
   case 16:
 #line 50 "ffff.y" /* yacc.c:1646  */
-    { quadComp((yyvsp[-1].n),convert((yyvsp[-2].e)),(yyvsp[0].n));}
+    {  create((yyvsp[-1].n),convert((yyvsp[-2].e)),(yyvsp[0].n),""); quadComp((yyvsp[-1].n),convert((yyvsp[-2].e)),(yyvsp[0].n));}
 #line 1325 "ffff.tab.c" /* yacc.c:1646  */
     break;
 

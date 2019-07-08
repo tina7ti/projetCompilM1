@@ -45,9 +45,9 @@ AFFEC : idf '=' idf {create("=",$3," ",$1);}
 COND : mc_if '(' COMP ')' INST { esp1++; if(esp1 != esp) printf("error de if"); quadFinIF();}
 	| mc_if '(' COMP ')' INST mc_elif '(' COMP ')' INST
 ;
-COMP : idf CO idf { quadComp($2,$1,$3); printf("%s",$2); }
-	| idf CO entier { quadComp($2,$1,convert($3));}
-	| entier CO idf { quadComp($2,convert($1),$3);}
+COMP : idf CO idf { printf("%s",$2); create($2,$1,$3,""); quadComp($2,$1,$3); }
+	| idf CO entier { create($2,$1,convert($3),""); quadComp($2,$1,convert($3));}
+	| entier CO idf {  create($2,convert($1),$3,""); quadComp($2,convert($1),$3);}
 ;
 CO : eg { $$ = strdup($1);}
 	| infoueg { $$ = strdup($1);}
