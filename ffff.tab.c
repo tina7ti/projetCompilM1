@@ -68,7 +68,7 @@
 #include <stdlib.h>
 #include <string.h>
 extern FILE* yyin;
-#include "fonct.h"
+#include "fonct.c"
 #include "quad.c"
 int yylex();
 int yyerror(char * msg);
@@ -1285,19 +1285,19 @@ yyreduce:
 
   case 9:
 #line 42 "ffff.y" /* yacc.c:1646  */
-    {create("=",(yyvsp[0].n)," ",(yyvsp[-2].n));}
+    { inserer((yyvsp[-2].n)); inserer((yyvsp[0].n)); create("=",(yyvsp[0].n)," ",(yyvsp[-2].n));}
 #line 1290 "ffff.tab.c" /* yacc.c:1646  */
     break;
 
   case 10:
 #line 43 "ffff.y" /* yacc.c:1646  */
-    {create("=",convert((yyvsp[0].e))," ",(yyvsp[-2].n));}
+    { inserer((yyvsp[-2].n)); create("=",convert((yyvsp[0].e))," ",(yyvsp[-2].n));}
 #line 1296 "ffff.tab.c" /* yacc.c:1646  */
     break;
 
   case 11:
 #line 44 "ffff.y" /* yacc.c:1646  */
-    {create("=",(yyvsp[0].NT).val," ",(yyvsp[-2].n));}
+    {inserer((yyvsp[-2].n)); create("=",(yyvsp[0].NT).val," ",(yyvsp[-2].n));}
 #line 1302 "ffff.tab.c" /* yacc.c:1646  */
     break;
 
@@ -1622,7 +1622,9 @@ yyin=fopen("test.txt","r");
 yyparse();
 fclose(yyin);
 printf("\n\n");
-printf("-----------------AFFICHER LES QUAD------------------------------ ");
+afficher();
+printf("\n \n");
+printf("------------- AFFICHER LES QUAD (avant opti)----------------------- ");
 printf("\n\n");
 afficherQuad();
 }

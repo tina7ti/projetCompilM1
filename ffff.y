@@ -3,7 +3,7 @@
 #include <stdlib.h>
 #include <string.h>
 extern FILE* yyin;
-#include "fonct.h"
+#include "fonct.c"
 #include "quad.c"
 int yylex();
 int yyerror(char * msg);
@@ -39,9 +39,9 @@ S : INST {printf(" \n programme syntaxiquement juste \n");YYACCEPT;}
 ;
 INST : AFFEC INST | EXP INST | COND INST | AFFEC | EXP | COND 
 ;
-AFFEC : idf '=' idf {create("=",$3," ",$1);}
-	| idf '=' entier {create("=",convert($3)," ",$1);}
-	| idf '=' EXP {create("=",$3.val," ",$1);}
+AFFEC : idf '=' idf { inserer($1); inserer($3); create("=",$3," ",$1);}
+	| idf '=' entier { inserer($1); create("=",convert($3)," ",$1);}
+	| idf '=' EXP {inserer($1); create("=",$3.val," ",$1);}
 ;
 COND : mc_if '(' COMP ')' INST { esp1++; if(esp1 != esp) printf("error de if"); quadFinIF();}
 	| mc_if '(' COMP ')' INST mc_elif '(' COMP ')' INST
@@ -83,7 +83,9 @@ yyin=fopen("test.txt","r");
 yyparse();
 fclose(yyin);
 printf("\n\n");
-printf("-----------------AFFICHER LES QUAD------------------------------ ");
+afficher();
+printf("\n \n");
+printf("------------- AFFICHER LES QUAD (avant opti)----------------------- ");
 printf("\n\n");
 afficherQuad();
 }

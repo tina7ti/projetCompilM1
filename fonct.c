@@ -32,15 +32,15 @@ CpTabSym++;
 //une fonction pour afficher la table de symbole
 void afficher ()
 {
-printf("\n/***************Table des symboles ******************/\n");
-printf("_______________\n");
-printf("\t| NomEntite |\n");
-printf("______________\n");
+printf("\n/------- AFFICHE LES IDFs --------/\n");
+printf("_____________\n");
+printf("| NomEntite |\n");
+printf("____________\n");
 int i=0;
 while(i<CpTabSym)
 {
 
-printf("\t|%10s |\n",ts[i].NomEntite);
+printf("|%10s |\n",ts[i].NomEntite);
 
 i++;
 }
