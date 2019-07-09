@@ -19,7 +19,7 @@ entier ((0|[1-9]{chiffre}*)|"("[+-](0|[1-9]{chiffre}*)")")
 reel ((0|[1-9]{chiffre}*)"."{chiffre}+|"("[+-](0|[1-9]{chiffre}*)"."{chiffre}+")")
 caract  '.'
 comment "#"(.)*
-espace ("\t"|" ")+
+espace (" ")+
 tab ("\t")
 saut ("\n")+
 
@@ -54,7 +54,8 @@ char {col+=yyleng; return mc_char;}
 or {return or;}
 and {return and;}
 {comment}
-{espace} {col+=yyleng; esp++; }
+{espace} {col+=yyleng;}
+{tab} {col+=yyleng; esp++; }
 {saut} {col=1; line+=yyleng; if(esp>0) esp--; }
 
 . {printf("erreur lexicale : \" %s \" \n ligne : %d colonne : %d \n",yytext,line,col); yyterminate();}

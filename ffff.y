@@ -10,7 +10,8 @@ int yyerror(char * msg);
 extern int line;
 extern int col;
 extern int esp;
-int esp1 = 0;
+int esp1 = 0,ielse,ielif,iBR=0;
+int tabBR[20];
 char* sauvComp="";
 int ntemp=1; char tempC[12]=""; 
 %}
@@ -44,12 +45,13 @@ AFFEC : idf '=' idf { inserer($1); inserer($3); create("=",$3," ",$1);}
 	| idf '=' EXP {inserer($1); create("=",$3," ",$1);} 
 ;
 COND : mc_if '(' COMP ')' ':' INST { esp1++; quadFinIF(); esp1--;}
-	| mc_if '(' COMP ')' ':' INST mc_else INST 
-	| mc_if '(' COMP ')' ':' INST mc_elif '(' COMP ')' INST
+	| mc_if '(' COMP ')' ':' INST mc_else ':' {create("BR","","",""); tabBR[iBR]=ind-1; iBR++; ielse = ind; quadFinIF_else(ielse);} INST {  } 
+	| mc_if '(' COMP ')' ':' INST mc_elif { create("BR","","",""); tabBR[iBR]=ind-1; iBR++; ielif = ind; quadFinIF_else(ielif);} '(' COMP ')' ':' INST mc_else ':' {create("BR","","",""); tabBR[iBR]=ind-1; iBR++; ielse = ind; quadFinIF_else(ielse);} INST {  }
 ;
 COMP : idf CO idf {  quadComp(sauvComp,$1,$3); }
 	| idf CO entier {  quadComp(sauvComp,$1,$3);}
 	| entier CO idf {   quadComp(sauvComp,$1,$3);}
+	| entier CO entier {   quadComp(sauvComp,$1,$3);}
 ;
 CO : eg { sauvComp = "=="; }
 	| infoueg { sauvComp = "<=";}

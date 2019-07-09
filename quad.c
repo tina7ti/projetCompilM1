@@ -82,19 +82,22 @@ void quadFinIF()
 	strcpy(qu[indBR].op1,convert(ind));
 }
 
-
+void quadFinIF_else(int ielse)
+{
+	strcpy(qu[indBR].op1,convert(ielse));
+}
 
 
 void afficherQuad()
 {
-    printf("*********************Quadruplet***********************\n");
+    printf("************* Quadruplet ***************\n\n");
     int i;
     for(i=0;i<ind;i++)
 		{
-            printf("\n %d - ( %s  ,  %s  ,  %s  ,  %s )",i,qu[i].opr,qu[i].op1,qu[i].op2,qu[i].res);
-            printf("\n---------------------------------------------------\n");
+            printf("  %d - ( %s  ,  %s  ,  %s  ,  %s )",i,qu[i].opr,qu[i].op1,qu[i].op2,qu[i].res);
+            printf("\n----------------------------------------\n");
         }
-    printf("*********************FIN Quadruplet***********************\n");
+    printf("\n*********** FIN Quadruplet *************\n");
 }
 
 // code : assembleur
