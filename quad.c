@@ -40,36 +40,36 @@ char* convert(int i){
 }
 
 //quad pour les comparaisons
-void quadComp(char* opr,char* op1,char* op2)
+void quadComp(char* opr)
 {
 	//create(opr,op1,op2,"");
 	
-	if( strcmp(opr,"=="))
+	if( strcmp(opr,"==")==0)
 	{
 		create("BNZ","","","");
 	}else
 	{
-		if( strcmp(opr,"!="))
+		if( strcmp(opr,"!=")==0)
 	{
 		create("BZ","","","");
 	}else
 	{
-		if( strcmp(opr,">"))
+		if( strcmp(opr,">")==0)
 	{
 		create("BLE","","","");
 	}else
 	{
-		if( strcmp(opr,"<"))
+		if( strcmp(opr,"<")==0)
 	{
 		create("BGE","","","");
 	}else
 	{
-		if( strcmp(opr,">="))
+		if( strcmp(opr,">=")==0)
 	{
 		create("BL","","","");
 	}else
 	{
-		if( strcmp(opr,"<="))
+		if( strcmp(opr,"<=")==0)
 	{
 		create("BG","","","");
 	}	}	}	}	}	}	

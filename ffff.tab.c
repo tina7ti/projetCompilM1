@@ -76,9 +76,10 @@ extern int line;
 extern int col;
 extern int esp;
 int esp1 = 0;
+char* sauvComp="";
 int ntemp=1; char tempC[12]=""; 
 
-#line 82 "ffff.tab.c" /* yacc.c:339  */
+#line 83 "ffff.tab.c" /* yacc.c:339  */
 
 # ifndef YY_NULLPTR
 #  if defined __cplusplus && 201103L <= __cplusplus
@@ -147,13 +148,13 @@ extern int yydebug;
 
 union YYSTYPE
 {
-#line 18 "ffff.y" /* yacc.c:355  */
+#line 19 "ffff.y" /* yacc.c:355  */
 
 char* n;
 int e;
 struct {int type;char* val;}NT;
 
-#line 157 "ffff.tab.c" /* yacc.c:355  */
+#line 158 "ffff.tab.c" /* yacc.c:355  */
 };
 
 typedef union YYSTYPE YYSTYPE;
@@ -170,7 +171,7 @@ int yyparse (void);
 
 /* Copy the second part of user declarations.  */
 
-#line 174 "ffff.tab.c" /* yacc.c:358  */
+#line 175 "ffff.tab.c" /* yacc.c:358  */
 
 #ifdef short
 # undef short
@@ -470,10 +471,10 @@ static const yytype_uint8 yytranslate[] =
   /* YYRLINE[YYN] -- Source line where rule number YYN was defined.  */
 static const yytype_uint8 yyrline[] =
 {
-       0,    37,    37,    39,    39,    39,    39,    39,    39,    41,
-      42,    43,    45,    46,    48,    49,    50,    52,    53,    54,
-      55,    56,    57,    59,    60,    61,    62,    64,    65,    66,
-      68,    69,    70
+       0,    38,    38,    40,    40,    40,    40,    40,    40,    42,
+      43,    44,    46,    47,    49,    50,    51,    53,    54,    55,
+      56,    57,    58,    60,    61,    62,    63,    65,    66,    67,
+      69,    70,    71
 };
 #endif
 
@@ -1277,109 +1278,109 @@ yyreduce:
   switch (yyn)
     {
         case 2:
-#line 37 "ffff.y" /* yacc.c:1646  */
+#line 38 "ffff.y" /* yacc.c:1646  */
     {printf(" \n programme syntaxiquement juste \n");YYACCEPT;}
-#line 1283 "ffff.tab.c" /* yacc.c:1646  */
+#line 1284 "ffff.tab.c" /* yacc.c:1646  */
     break;
 
   case 9:
-#line 41 "ffff.y" /* yacc.c:1646  */
+#line 42 "ffff.y" /* yacc.c:1646  */
     {create("=",(yyvsp[0].n)," ",(yyvsp[-2].n));}
-#line 1289 "ffff.tab.c" /* yacc.c:1646  */
+#line 1290 "ffff.tab.c" /* yacc.c:1646  */
     break;
 
   case 10:
-#line 42 "ffff.y" /* yacc.c:1646  */
+#line 43 "ffff.y" /* yacc.c:1646  */
     {create("=",convert((yyvsp[0].e))," ",(yyvsp[-2].n));}
-#line 1295 "ffff.tab.c" /* yacc.c:1646  */
+#line 1296 "ffff.tab.c" /* yacc.c:1646  */
     break;
 
   case 11:
-#line 43 "ffff.y" /* yacc.c:1646  */
+#line 44 "ffff.y" /* yacc.c:1646  */
     {create("=",(yyvsp[0].NT).val," ",(yyvsp[-2].n));}
-#line 1301 "ffff.tab.c" /* yacc.c:1646  */
+#line 1302 "ffff.tab.c" /* yacc.c:1646  */
     break;
 
   case 12:
-#line 45 "ffff.y" /* yacc.c:1646  */
+#line 46 "ffff.y" /* yacc.c:1646  */
     { esp1++; if(esp1 != esp) printf("error de if"); quadFinIF();}
-#line 1307 "ffff.tab.c" /* yacc.c:1646  */
+#line 1308 "ffff.tab.c" /* yacc.c:1646  */
     break;
 
   case 14:
-#line 48 "ffff.y" /* yacc.c:1646  */
-    { printf("%s",(yyvsp[-1].n)); create((yyvsp[-1].n),(yyvsp[-2].n),(yyvsp[0].n),""); quadComp((yyvsp[-1].n),(yyvsp[-2].n),(yyvsp[0].n)); }
-#line 1313 "ffff.tab.c" /* yacc.c:1646  */
+#line 49 "ffff.y" /* yacc.c:1646  */
+    { create(sauvComp,(yyvsp[-2].n),(yyvsp[0].n),""); quadComp(sauvComp); }
+#line 1314 "ffff.tab.c" /* yacc.c:1646  */
     break;
 
   case 15:
-#line 49 "ffff.y" /* yacc.c:1646  */
-    { create((yyvsp[-1].n),(yyvsp[-2].n),convert((yyvsp[0].e)),""); quadComp((yyvsp[-1].n),(yyvsp[-2].n),convert((yyvsp[0].e)));}
-#line 1319 "ffff.tab.c" /* yacc.c:1646  */
+#line 50 "ffff.y" /* yacc.c:1646  */
+    { create(sauvComp,(yyvsp[-2].n),convert((yyvsp[0].e)),""); quadComp(sauvComp);}
+#line 1320 "ffff.tab.c" /* yacc.c:1646  */
     break;
 
   case 16:
-#line 50 "ffff.y" /* yacc.c:1646  */
-    {  create((yyvsp[-1].n),convert((yyvsp[-2].e)),(yyvsp[0].n),""); quadComp((yyvsp[-1].n),convert((yyvsp[-2].e)),(yyvsp[0].n));}
-#line 1325 "ffff.tab.c" /* yacc.c:1646  */
+#line 51 "ffff.y" /* yacc.c:1646  */
+    {  create(sauvComp,convert((yyvsp[-2].e)),(yyvsp[0].n),""); quadComp(sauvComp);}
+#line 1326 "ffff.tab.c" /* yacc.c:1646  */
     break;
 
   case 17:
-#line 52 "ffff.y" /* yacc.c:1646  */
-    { (yyval.n) = strdup((yyvsp[0].n));}
-#line 1331 "ffff.tab.c" /* yacc.c:1646  */
+#line 53 "ffff.y" /* yacc.c:1646  */
+    { sauvComp = "=="; }
+#line 1332 "ffff.tab.c" /* yacc.c:1646  */
     break;
 
   case 18:
-#line 53 "ffff.y" /* yacc.c:1646  */
-    { (yyval.n) = strdup((yyvsp[0].n));}
-#line 1337 "ffff.tab.c" /* yacc.c:1646  */
+#line 54 "ffff.y" /* yacc.c:1646  */
+    { sauvComp = "<=";}
+#line 1338 "ffff.tab.c" /* yacc.c:1646  */
     break;
 
   case 19:
-#line 54 "ffff.y" /* yacc.c:1646  */
-    { (yyval.n) = strdup((yyvsp[0].n));}
-#line 1343 "ffff.tab.c" /* yacc.c:1646  */
+#line 55 "ffff.y" /* yacc.c:1646  */
+    { sauvComp = ">=";}
+#line 1344 "ffff.tab.c" /* yacc.c:1646  */
     break;
 
   case 20:
-#line 55 "ffff.y" /* yacc.c:1646  */
-    { (yyval.n) = strdup((yyvsp[0].n));}
-#line 1349 "ffff.tab.c" /* yacc.c:1646  */
+#line 56 "ffff.y" /* yacc.c:1646  */
+    { sauvComp = "!=";}
+#line 1350 "ffff.tab.c" /* yacc.c:1646  */
     break;
 
   case 21:
-#line 56 "ffff.y" /* yacc.c:1646  */
-    { (yyval.n) = strdup((yyvsp[0].n));}
-#line 1355 "ffff.tab.c" /* yacc.c:1646  */
+#line 57 "ffff.y" /* yacc.c:1646  */
+    { sauvComp = ">";}
+#line 1356 "ffff.tab.c" /* yacc.c:1646  */
     break;
 
   case 22:
-#line 57 "ffff.y" /* yacc.c:1646  */
-    { (yyval.n) = strdup((yyvsp[0].n));}
-#line 1361 "ffff.tab.c" /* yacc.c:1646  */
+#line 58 "ffff.y" /* yacc.c:1646  */
+    { sauvComp = "<";}
+#line 1362 "ffff.tab.c" /* yacc.c:1646  */
     break;
 
   case 30:
-#line 68 "ffff.y" /* yacc.c:1646  */
+#line 69 "ffff.y" /* yacc.c:1646  */
     {if ((yyvsp[0].e)==0) {printf("erreur a la ligne %d colonne %d : division par zero interdit\n", line,col);}else{create("/",(yyvsp[-2].n),convert((yyvsp[0].e)),(yyval.NT).val);}}
-#line 1367 "ffff.tab.c" /* yacc.c:1646  */
+#line 1368 "ffff.tab.c" /* yacc.c:1646  */
     break;
 
   case 31:
-#line 69 "ffff.y" /* yacc.c:1646  */
+#line 70 "ffff.y" /* yacc.c:1646  */
     {if ((yyvsp[0].e)==0){ printf("erreur a la ligne %d colonne %d: division par zero interdit\n", line,col);}else{create("/",convert((yyvsp[-2].e)),convert((yyvsp[0].e)),(yyval.NT).val);}}
-#line 1373 "ffff.tab.c" /* yacc.c:1646  */
+#line 1374 "ffff.tab.c" /* yacc.c:1646  */
     break;
 
   case 32:
-#line 70 "ffff.y" /* yacc.c:1646  */
+#line 71 "ffff.y" /* yacc.c:1646  */
     {if ((yyvsp[0].n)==0){ printf("erreur a la ligne %d colonne %d: division par zero interdit\n", line,col);}else{create("/",(yyvsp[-2].n),(yyvsp[0].n),(yyval.NT).val);}}
-#line 1379 "ffff.tab.c" /* yacc.c:1646  */
+#line 1380 "ffff.tab.c" /* yacc.c:1646  */
     break;
 
 
-#line 1383 "ffff.tab.c" /* yacc.c:1646  */
+#line 1384 "ffff.tab.c" /* yacc.c:1646  */
       default: break;
     }
   /* User semantic actions sometimes alter yychar, and that requires
@@ -1607,7 +1608,7 @@ yyreturn:
 #endif
   return yyresult;
 }
-#line 72 "ffff.y" /* yacc.c:1906  */
+#line 73 "ffff.y" /* yacc.c:1906  */
 
 int yyerror(char* msg){
 

@@ -11,6 +11,7 @@ extern int line;
 extern int col;
 extern int esp;
 int esp1 = 0;
+char* sauvComp="";
 int ntemp=1; char tempC[12]=""; 
 %}
 
@@ -45,16 +46,16 @@ AFFEC : idf '=' idf {create("=",$3," ",$1);}
 COND : mc_if '(' COMP ')' INST { esp1++; if(esp1 != esp) printf("error de if"); quadFinIF();}
 	| mc_if '(' COMP ')' INST mc_elif '(' COMP ')' INST
 ;
-COMP : idf CO idf { printf("%s",$2); create($2,$1,$3,""); quadComp($2,$1,$3); }
-	| idf CO entier { create($2,$1,convert($3),""); quadComp($2,$1,convert($3));}
-	| entier CO idf {  create($2,convert($1),$3,""); quadComp($2,convert($1),$3);}
+COMP : idf CO idf { create(sauvComp,$1,$3,""); quadComp(sauvComp); }
+	| idf CO entier { create(sauvComp,$1,convert($3),""); quadComp(sauvComp);}
+	| entier CO idf {  create(sauvComp,convert($1),$3,""); quadComp(sauvComp);}
 ;
-CO : eg { $$ = strdup($1);}
-	| infoueg { $$ = strdup($1);}
-	| supoueg { $$ = strdup($1);}
-	| diff { $$ = strdup($1);}
-	| sup { $$ = strdup($1);}
-	| inf { $$ = strdup($1);}
+CO : eg { sauvComp = "=="; }
+	| infoueg { sauvComp = "<=";}
+	| supoueg { sauvComp = ">=";}
+	| diff { sauvComp = "!=";}
+	| sup { sauvComp = ">";}
+	| inf { sauvComp = "<";}
 ;
 EXP : idf OP idf 
 	| entier OP entier
