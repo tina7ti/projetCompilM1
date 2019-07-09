@@ -45,3 +45,20 @@ printf("|%10s |\n",ts[i].NomEntite);
 i++;
 }
 }
+
+// fonction qui verifier le nbr de tab avec niveau d'indexation
+void indext(int indx,int esp)
+{
+	if(indx == esp) 
+		{
+			printf("error de if \n");
+			exit(-1);
+		}
+}
+
+//fonction qui retourne la taille du tableau des entites
+int taille()
+{
+	return CpTabSym;
+}
+

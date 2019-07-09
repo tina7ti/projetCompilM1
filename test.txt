@@ -1,4 +1,5 @@
 Ihjdhs = 5764
 Ujjsd = Plkjd
-if (Upm88 <= Pml)
-	Ohds = Gjd
+if (Upm88 <= Pml) :
+	Ohds = Gjd +Ojh - 5795
+Pokl = 526
