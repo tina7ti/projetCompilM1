@@ -40,7 +40,7 @@ char {col+=yyleng; return mc_char;}
 		 if((atoi(ss)<32767) && (atoi(ss)>-32768 )){col+=yyleng; yylval.n=strdup(ss); return entier;}else {printf("erreur lexicale : \" %s \" \n ligne : %d colonne : %d\n l'entier doit etre entre -32768 et 32767 ! \n",ss,line,col); yyterminate();} }
 {reel} {col+=yyleng; yylval.n=strdup(yytext); return reel;}
 {caract} {col+=yyleng; yylval.n=strdup(yytext); return caract;}
-[:[\]()=] {col+=yyleng; return yytext[0];}
+[:,[\]()=] {col+=yyleng; return yytext[0];}
 "+" {return add;}
 "-" {return sub;}
 "*" {return mul;}
