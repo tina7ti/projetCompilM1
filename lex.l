@@ -20,7 +20,7 @@ reel ((0|[1-9]{chiffre}*)"."{chiffre}+|"("[+-](0|[1-9]{chiffre}*)"."{chiffre}+")
 caract  '.'
 comment "#"(.)*
 espace (" ")+
-tab ("\t")
+
 saut ("\n")+
 
 %%
@@ -53,9 +53,8 @@ char {col+=yyleng; return mc_char;}
 "!=" {return diff;}
 or {return or;}
 and {return and;}
-{comment}
+{comment} {line+=yyleng; yylval.n=strdup(yytext); return comment;}
 {espace} {col+=yyleng;}
-{tab} {col+=yyleng; esp++; yylval.n=strdup(yytext); return tab;}
 {saut} {col=1; line+=yyleng; if(esp>0) esp--; yylval.n=strdup(yytext); return saut; }
 
 . {printf("erreur lexicale : \" %s \" \n ligne : %d colonne : %d \n",yytext,line,col); yyterminate();}

@@ -71,8 +71,8 @@ extern int yydebug;
     diff = 281,
     or = 282,
     and = 283,
-    tab = 284,
-    saut = 285
+    saut = 284,
+    comment = 285
   };
 #endif
 
