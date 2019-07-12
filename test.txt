@@ -1,9 +1,13 @@
 Ihjdhs = 5764
 Ujjsd = Plkjd
 if (Upm88 <= Pml) :
-	Ohds = Gjd +Ojh - 5795
+Ohds = Gjd 
 elif (3<9) :
-	Mk= 9+3/1
+Mk= 9
 else :
-	Po = 6666
+Po = 6666
+
+
+
 Pml = 99
+Mlk = 111

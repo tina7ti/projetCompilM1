@@ -956,13 +956,13 @@ YY_RULE_SETUP
 case 30:
 YY_RULE_SETUP
 #line 58 "lex.l"
-{col+=yyleng; esp++; }
+{col+=yyleng; esp++; yylval.n=strdup(yytext); return tab;}
 	YY_BREAK
 case 31:
 /* rule 31 can match eol */
 YY_RULE_SETUP
 #line 59 "lex.l"
-{col=1; line+=yyleng; if(esp>0) esp--; }
+{col=1; line+=yyleng; if(esp>0) esp--; yylval.n=strdup(yytext); return saut; }
 	YY_BREAK
 case 32:
 YY_RULE_SETUP

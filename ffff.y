@@ -23,7 +23,7 @@ int e;
 struct {int type;char* val;}NT;
 }
 
-%token <n>idf <n>entier <n>reel <n>caract mc_if mc_elif mc_else mc_while mc_for in range mc_int mc_float mc_char add sub mul divis <n>eg <n>infoueg <n>supoueg <n>sup <n>inf <n>diff <n>or <n>and 
+%token <n>idf <n>entier <n>reel <n>caract mc_if mc_elif mc_else mc_while mc_for in range mc_int mc_float mc_char add sub mul divis <n>eg <n>infoueg <n>supoueg <n>sup <n>inf <n>diff <n>or <n>and <n>tab <n>saut 
 %token ':' '[' ']' '(' ')' '='
 %left or and
 %left eg infoueg supoueg sup inf diff
@@ -38,15 +38,15 @@ struct {int type;char* val;}NT;
 %%
 S : INST {printf(" \n programme syntaxiquement juste \n");YYACCEPT;}
 ;
-INST :  AFFEC INST  | EXP INST  |COND INST  | AFFEC  | EXP  | COND   
+INST : AFFEC INST | EXP INST | COND INST | AFFEC | EXP | COND | saut INST | saut
 ;
-AFFEC : idf '=' idf { inserer($1); inserer($3); create("=",$3," ",$1);} 
-	| idf '=' entier { inserer($1); create("=",$3," ",$1);} 
-	| idf '=' EXP {inserer($1); create("=",$3," ",$1);} 
+AFFEC : idf '=' idf saut { inserer($1); inserer($3); create("=",$3," ",$1);} 
+	| idf '=' entier saut { inserer($1); create("=",$3," ",$1);} 
+	| idf '=' EXP saut {inserer($1); create("=",$3," ",$1);} 
 ;
-COND : mc_if '(' COMP ')' ':' INST { esp1++; quadFinIF(); esp1--;}
-	| mc_if '(' COMP ')' ':' INST mc_else ':' {create("BR","","",""); tabBR[iBR]=ind-1; iBR++; ielse = ind; quadFinIF_else(ielse);} INST {  } 
-	| mc_if '(' COMP ')' ':' INST mc_elif { create("BR","","",""); tabBR[iBR]=ind-1; iBR++; ielif = ind; quadFinIF_else(ielif);} '(' COMP ')' ':' INST mc_else ':' {create("BR","","",""); tabBR[iBR]=ind-1; iBR++; ielse = ind; quadFinIF_else(ielse);} INST {  }
+COND : mc_if '(' COMP ')' ':' saut INST { esp1++; quadFinIF(); esp1--;}
+	| mc_if '(' COMP ')' ':' saut INST mc_else ':' saut {create("BR","","",""); tabBR[iBR]=ind-1; iBR++; ielse = ind; quadFinIF_else(ielse);} INST {  } 
+	| mc_if '(' COMP ')' ':' saut INST mc_elif { create("BR","","",""); tabBR[iBR]=ind-1; iBR++; ielif = ind; quadFinIF_else(ielif);} '(' COMP ')' ':' saut INST mc_else ':' saut {create("BR","","",""); tabBR[iBR]=ind-1; iBR++; ielse = ind; quadFinIF_else(ielse);} INST {  }
 ;
 COMP : idf CO idf {  quadComp(sauvComp,$1,$3); }
 	| idf CO entier {  quadComp(sauvComp,$1,$3);}
