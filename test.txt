@@ -1,7 +1,9 @@
-Ihjdhs = 5764
 Ujjsd = Plkjd
 #sjdksqql kqdks 
 int Xx =0,Yy, Zz= 95+354
 if(Lo == 9) :
- Yy = 63
-At=6
+	Yy = Plkjd
+OMM = Maa
+At=Zz
+OMM = Ma
+#jygjh hgj

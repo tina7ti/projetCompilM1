@@ -1,28 +1,31 @@
 DATA SEGMENt 
-Ihjdhs DD ?
 Ujjsd DD ?
 Plkjd DD ?
 Xx DD ?
 Yy DD ?
 Zz DD ?
+OMM DD ?
+Maa DD ?
 At DD ?
+Ma DD ?
 DATA ENDS
 CODE SEGEMENt
 ASSUME CS:CODE, DS:DATA
 MAIN :
 MOV AX,DATA
 MOV DS,AX
-etiq0 : MOV Ihjdhs, 5764
-etiq1 : MOV Ujjsd, Plkjd
-etiq2 : MOV Xx, 0
-etiq3 : MOV AX, 95
+etiq0 : MOV Ujjsd, Plkjd
+etiq1 : MOV Xx, 0
+etiq2 : MOV AX, 95
 	 ADD AX, 354
-etiq4 : MOV Zz, AX
-etiq5 : MOV AX, Lo
+etiq3 : MOV Zz, AX
+etiq4 : MOV AX, Lo
 	CMP AX, 9
-	JNE etiq8
-etiq6 : MOV Yy, 63
-etiq7 : MOV At, 6
+	JNE etiq
+etiq5 : MOV Yy, Plkjd
+etiq6 : MOV OMM, Maa
+etiq7 : MOV At, Zz
+etiq8 : MOV OMM, Ma
 FIN :
 MOV AH,4CH
 INt 21h

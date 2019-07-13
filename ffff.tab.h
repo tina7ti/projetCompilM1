@@ -72,7 +72,8 @@ extern int yydebug;
     or = 282,
     and = 283,
     saut = 284,
-    comment = 285
+    comment = 285,
+    tab = 286
   };
 #endif
 
@@ -87,7 +88,7 @@ char* n;
 int e;
 struct {int type;char* val;}NT;
 
-#line 91 "ffff.tab.h" /* yacc.c:1909  */
+#line 92 "ffff.tab.h" /* yacc.c:1909  */
 };
 
 typedef union YYSTYPE YYSTYPE;

@@ -6,8 +6,7 @@
 #include "fonct.h"
 #include "quad.h"
 extern YYSTYPE yylval;
-int line=1,col=1;
-int esp=0;
+int line=1,col=1,nbtab=0;
 char* p1;
 char ss[50]={ 0 };
 %}
@@ -20,7 +19,7 @@ reel ((0|[1-9]{chiffre}*)"."{chiffre}+|"("[+-](0|[1-9]{chiffre}*)"."{chiffre}+")
 caract  '.'
 comment "#"(.)*
 espace (" ")+
-
+tab ("\t")+
 saut ("\n")+
 
 %%
@@ -53,9 +52,10 @@ char {col+=yyleng; return mc_char;}
 "!=" {return diff;}
 or {return or;}
 and {return and;}
-{comment} {line+=yyleng; yylval.n=strdup(yytext); return comment;}
+{comment} {yylval.n=strdup(yytext); return comment;}
 {espace} {col+=yyleng;}
-{saut} {col=1; line+=yyleng; if(esp>0) esp--; yylval.n=strdup(yytext); return saut; }
+{tab} {col+=yyleng; nbtab+=yyleng; yylval.n=strdup(yytext); return tab;}
+{saut} {col=1; line+=yyleng; nbtab=0; return saut; }
 
 . {printf("erreur lexicale : \" %s \" \n ligne : %d colonne : %d \n",yytext,line,col); yyterminate();}
 %%
