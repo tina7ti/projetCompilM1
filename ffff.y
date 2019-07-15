@@ -10,10 +10,12 @@ int yyerror(char * msg);
 extern int line;
 extern int col;
 extern int nbtab;
-int nvind = 0,nbinst=0,ielse,ielif,iBR=0,inif=0;
+extern int nvind;
+int nbinst=0,ielse,ielif,iBR=0,inif=0;
 int tabBR[20];
 char* sauvComp="";
 int ntemp=1; char tempC[12]=""; 
+int aumoins1=0;
 %}
 
 %union
@@ -38,12 +40,16 @@ struct {int type;char* val;}NT;
 %%
 S : INST {printf(" \n programme syntaxiquement juste \n");YYACCEPT;}
 ;
-INST : DEC INST | AFFEC INST | EXP INST | COND INST | DEC | AFFEC | EXP | COND | saut INST | saut | COMMENTS 
+INST : DEC INST | AFFEC INST | EXP INST | COND INST | DEC | AFFEC | EXP | COND | sa INST | sa | COMMENTS 
 	| COMMENTS INST | TABU DEC INST | TABU DEC | TABU AFFEC INST | TABU AFFEC | TABU COND INST | TABU COND
 ;
-TABU : tab { if(nbinst==0 && nbtab==0 && nvind !=0) printf("erroorrr"); }
+sa : saut {printf(" nvind %d nbtab %d aumoins1 %d \n",nvind,nbtab,aumoins1); if(nvind != nbtab && aumoins1==0){ yyerror("Tabulation ou espace attendu apres les ':' ");}else{ if(nbtab == nvind-1 && aumoins1 !=0){ nvind--; aumoins1=0;  } }
+} 
 ;
-DEC : mc_int VARS saut 
+TABU : tab { if(aumoins1==0 && nvind ==0) { yyerror("Tabulation inattendu "); }else
+{if(nvind != nbtab && aumoins1==0){ yyerror("Tabulation ou espace attendu apres les ':' ");}} }
+;
+DEC : mc_int VARS sa 
 ;
 VARS : idf { inserer($1); }
 	| VARS ',' idf { inserer($3); }
@@ -52,20 +58,20 @@ VARS : idf { inserer($1); }
 ;
 MEMdr : idf {inserer($1);} | entier | EXP 
 ;
-COMMENTS : comment saut | comment | comment COMMENTS
+COMMENTS : comment sa | comment | comment COMMENTS
 ;
-AFFEC : idf '=' idf saut { inserer($1); inserer($3); create("=",$3," ",$1); }
-	| idf '=' idf { inserer($1); inserer($3); create("=",$3," ",$1); } 
-	| idf '=' entier saut { inserer($1); create("=",$3," ",$1); } 
-	| idf '=' EXP saut { inserer($1); create("=",$3," ",$1);} 
+AFFEC : idf '=' idf {if(nvind != nbtab && aumoins1==0){ yyerror("Tabulation ou espace attendu apres les ':' ");}else{if(nvind!=0) aumoins1 =1;} inserer($1); inserer($3); create("=",$3," ",$1); }
+	| idf '=' idf { if(nvind != nbtab && aumoins1==0){ yyerror("Tabulation ou espace attendu apres les ':' ");}else{if(nvind!=0) aumoins1 =1;} inserer($1); inserer($3); create("=",$3," ",$1); } 
+	| idf '=' entier {if(nvind != nbtab && aumoins1==0){ yyerror("Tabulation ou espace attendu apres les ':' ");}else{if(nvind!=0) aumoins1 =1;} } sa { inserer($1); create("=",$3," ",$1); } 
+	| idf '=' EXP {if(nvind != nbtab && aumoins1==0){ yyerror("Tabulation ou espace attendu apres les ':' ");}else{if(nvind!=0) aumoins1 =1;} } sa { inserer($1); create("=",$3," ",$1);} 
 ;
 COND : IF_SEUL | IF_ELSE | IF_ELIF
 ; 
-IF_SEUL : mc_if '(' COMP ')' ':' saut INST {nvind--;}
+IF_SEUL : mc_if '(' COMP ')' ':' sa INST { }
 ;
-IF_ELSE : mc_if '(' COMP ')' ':' saut INST mc_else ':' saut {create("BR","","",""); tabBR[iBR]=ind-1; iBR++; ielse = ind; quadFinIF_else(ielse);} INST {  } 
+IF_ELSE : mc_if '(' COMP ')' ':' sa INST mc_else ':' sa {create("BR","","",""); tabBR[iBR]=ind-1; iBR++; ielse = ind; quadFinIF_else(ielse);} INST {  } 
 ;
-IF_ELIF : mc_if '(' COMP ')' ':' saut INST mc_elif { create("BR","","",""); tabBR[iBR]=ind-1; iBR++; ielif = ind; quadFinIF_else(ielif);} '(' COMP ')' ':' saut INST mc_else ':' saut {create("BR","","",""); tabBR[iBR]=ind-1; iBR++; ielse = ind; quadFinIF_else(ielse);} INST {  }
+IF_ELIF : mc_if '(' COMP ')' ':' sa INST mc_elif { create("BR","","",""); tabBR[iBR]=ind-1; iBR++; ielif = ind; quadFinIF_else(ielif);} '(' COMP ')' ':' sa INST mc_else ':' sa {create("BR","","",""); tabBR[iBR]=ind-1; iBR++; ielse = ind; quadFinIF_else(ielse);} INST {  }
 ;
 COMP : idf CO idf {  quadComp(sauvComp,$1,$3); }
 	| idf CO entier {  quadComp(sauvComp,$1,$3);}
@@ -106,6 +112,10 @@ printf("------------- AFFICHER LES QUAD (avant opti)----------------------- ");
 printf("\n\n");
 afficherQuad();
 printf("\n\n");
+optimisation_propagation_copie();
+printf("------------- AFFICHER LES QUAD (apres opti)----------------------- ");
+printf("\n\n");
+afficherQuad();
 int t = taille();
 assembler(t);
 

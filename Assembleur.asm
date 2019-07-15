@@ -1,5 +1,5 @@
 DATA SEGMENt 
-Ujjsd DD ?
+Ojjsd DD ?
 Plkjd DD ?
 Xx DD ?
 Yy DD ?
@@ -14,7 +14,7 @@ ASSUME CS:CODE, DS:DATA
 MAIN :
 MOV AX,DATA
 MOV DS,AX
-etiq0 : MOV Ujjsd, Plkjd
+etiq0 : MOV Ojjsd, Plkjd
 etiq1 : MOV Xx, 0
 etiq2 : MOV AX, 95
 	 ADD AX, 354
@@ -22,9 +22,11 @@ etiq3 : MOV Zz, AX
 etiq4 : MOV AX, Lo
 	CMP AX, 9
 	JNE etiq
-etiq5 : MOV Yy, Plkjd
+etiq5 : MOV AX, Lp
+	CMP AX, 6
+	JGE etiq
 etiq6 : MOV OMM, Maa
-etiq7 : MOV At, Zz
+etiq7 : MOV At, AX
 etiq8 : MOV OMM, Ma
 FIN :
 MOV AH,4CH

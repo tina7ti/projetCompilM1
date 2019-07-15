@@ -22,6 +22,6 @@ void inserer(char entite[]);
 
 //une fonction pour afficher la table de symbole
 void afficher ();
-void indext(int indx,int esp);
+void indext(int indx,int esp,int aumoins1);
 int taille();
 

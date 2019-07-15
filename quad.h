@@ -16,3 +16,7 @@ void quadFinIF();
 void quadFinIF_else(int ielse);
 void afficherQuad();
 void assembler(int CptabSym);
+void simplfyMulti();
+int utiliser(int i,int j,char * temp);
+void suppAffNutil();
+void optimisation_propagation_copie();

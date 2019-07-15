@@ -47,9 +47,9 @@ i++;
 }
 
 // fonction qui verifier le nbr de tab avec niveau d'indexation
-void indext(int indx,int esp)
+void indext(int indx,int esp,int aumoins1)
 {
-	if(indx == esp) 
+	if(indx != esp && aumoins1==0) 
 		{
 			printf("error de if \n");
 			exit(-1);

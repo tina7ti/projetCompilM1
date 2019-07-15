@@ -250,3 +250,99 @@ void assembler(int CptabSym){
 	fprintf(f,"CODE ENDS\n");
 	fprintf(f,"END MAIN\n");
 }
+
+
+void simplfyMulti(){
+	int i;
+
+	for(i=0;i<ind;i++){
+			if(strcmp(qu[i].opr,"*")==0  ){
+				if(strcmp(qu[i].op1,"2")==0){
+					strcpy(qu[i].opr,"+");
+					strcpy(qu[i].op1,qu[i].op2);
+				}
+				if(strcmp(qu[i].op2,"2")==0){
+				    strcpy(qu[i].opr,"+");
+					strcpy(qu[i].op2,qu[i].op1);
+				}
+			}
+	}
+}
+
+
+int utiliser(int i,int j,char * temp){
+	int besoin=0;
+	while((j<ind)&&(besoin==0)){
+			 if((strcmp(qu[j].op1,temp)==0) || (strcmp(qu[j].op2,temp)==0))
+				 besoin=1;
+			 if(((strcmp(qu[j].opr,"BR")==0)&&(atoi(qu[j].op1)<i)))
+				 besoin=1;
+			 if(((strcmp(qu[j].opr,"BZ")==0)&&(atoi(qu[j].op1)<i)))
+				 besoin=1;
+			 if(((strcmp(qu[j].opr,"BNZ")==0)&&(atoi(qu[j].op1)<i)))
+				 besoin=1;
+			 if(((strcmp(qu[j].opr,"BG")==0)&&(atoi(qu[j].op1)<i)))
+				 besoin=1;
+			 if(((strcmp(qu[j].opr,"BGE")==0)&&(atoi(qu[j].op1)<i)))
+				 besoin=1;
+			 if(((strcmp(qu[j].opr,"BL")==0)&&(atoi(qu[j].op1)<i)))
+				 besoin=1;
+			 if(((strcmp(qu[j].opr,"BLE")==0)&&(atoi(qu[j].op1)<i)))
+				 besoin=1;
+			 j++;
+		 }
+		 return besoin;
+}
+
+// sup toutes affectation non utilisée
+void suppAffNutil(){
+ int i,j,used,fini,p;
+ char *temp;
+ for(i=0;i<ind;i++){
+		 if(strcmp(qu[i].opr,"=")==0){
+			 j=i+1;
+			  //j permet de voir si on va utiliser le resultat de la'affectation dans les prochains quadruplets
+			 temp = strdup(qu[i].res);
+			 used=utiliser(i,j,temp);
+			 if( used == 0 ){ //si le resultat n'a pas été utilisé donc on supprime le quad
+				 fini=0;
+				 //p permet de revenir en arriere pour ecraser les quads non utils
+				 p=i;
+				 while( (p>0) && (fini==0) ){
+					 if( (strcmp(qu[p-1].opr,"+")==0) || (strcmp(qu[p-1].opr,"-")==0) || (strcmp(qu[p-1].opr,"*")==0) || (strcmp(qu[p-1].opr,"/")==0)){
+						 p--;
+					 }
+					 else{
+					 	fini=1;
+					 }
+				 }
+				 for(j=p;j<ind-1;j++){
+					 qu[j]=qu[j+(i-p)+1];
+				 }
+				 ind=ind-(i-p)-1;
+			 }
+		 }
+ }
+}
+
+void optimisation_propagation_copie(){
+int i,k;
+int j=0;
+
+for(i=0;i<ind;i++) //***remplire la table pile copie avec les copies qui existent
+{
+  if((strcmp(qu[i].opr,"=")==0))
+  {
+	k=i+1;
+    while((k<ind)&&((strcmp(qu[i].opr,"=")!=0)||(strcmp(qu[i].res,qu[k].res)!=0))){
+
+       if(strcmp(qu[i].res,qu[k].op1)==0) // si var copie existe dans op1 je remplace
+        { qu[k].op1=strdup(qu[i].op1);}
+
+	   if(strcmp(qu[i].res,qu[k].op2)==0) // si var copie existe dans op2 je remplace
+         {qu[k].op2=strdup(qu[i].op1);}
+		 k++;
+	}
+  }
+}
+}

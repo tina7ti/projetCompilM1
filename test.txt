@@ -1,9 +1,9 @@
-Ujjsd = Plkjd
+Ojjsd = Plkjd
 #sjdksqql kqdks 
 int Xx =0,Yy, Zz= 95+354
 if(Lo == 9) :
-	Yy = Plkjd
-OMM = Maa
+	if(Lp<6) :
+		OMM = Maa
 At=Zz
 OMM = Ma
 #jygjh hgj

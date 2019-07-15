@@ -526,7 +526,7 @@ char *yytext;
 #include "fonct.h"
 #include "quad.h"
 extern YYSTYPE yylval;
-int line=1,col=1,nbtab=0;
+int line=1,col=1,nbtab=0,nvind=0;
 char* p1;
 char ss[50]={ 0 };
 #line 533 "lex.yy.c"
@@ -809,7 +809,7 @@ do_action:	/* This label is used only to access EOF actions. */
 case 1:
 YY_RULE_SETUP
 #line 26 "lex.l"
-{  col+=yyleng; return mc_if;}
+{  col+=yyleng; nvind++; return mc_if;}
 	YY_BREAK
 case 2:
 YY_RULE_SETUP
