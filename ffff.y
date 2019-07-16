@@ -47,8 +47,7 @@ S : INST {printf(" \n programme syntaxiquement juste \n");YYACCEPT;}
 INST : DEC sa INST | AFFEC sa INST | COND INST | DEC | AFFEC | COND | sa INST | sa | COMMENTS 
 	| COMMENTS INST | TABU DEC INST | TABU DEC | TABU AFFEC INST | TABU AFFEC | TABU COND INST | TABU COND
 ;
-sa : saut {printf(" nvind %d nbtab %d aumoins1 %d \n",nvind,nbtab,aumoins1); nbtab=0;
-} 
+sa : saut { nbtab=0;}
 ;
 TABU : tab { if(aumoins1==0 && nvind ==0) { yyerror("Tabulation inattendu "); }else
 {if(nvind != nbtab && aumoins1==0 && nvind >0){ yyerror("Tabulation attendu apres les ':' ");}else { if(nvind !=0 && aumoins1==0 && nbtab==nvind)aumoins1=1;} }
