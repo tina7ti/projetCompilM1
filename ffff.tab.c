@@ -1333,7 +1333,7 @@ yyreduce:
   case 20:
 #line 53 "ffff.y" /* yacc.c:1646  */
     { if(aumoins1==0 && nvind ==0) { yyerror("Tabulation inattendu "); }else
-{if(nvind != nbtab && aumoins1==0){ yyerror("Tabulation ou espace attendu apres les ':' ");}else { if(nvind !=0 && aumoins1==0 && nbtab==nvind)aumoins1=1;} }
+{if(nvind != nbtab && aumoins1==0 && nvind >0){ yyerror("Tabulation attendu apres les ':' ");}else { if(nvind !=0 && aumoins1==0 && nbtab==nvind)aumoins1=1;} }
 majIND(&nvind,nbtab,&aumoins1,1); }
 #line 1339 "ffff.tab.c" /* yacc.c:1646  */
     break;
@@ -1382,13 +1382,13 @@ majIND(&nvind,nbtab,&aumoins1,1); }
 
   case 33:
 #line 69 "ffff.y" /* yacc.c:1646  */
-    { inserer((yyvsp[-2].n)); create("=",(yyvsp[0].n)," ",(yyvsp[-2].n)); }
+    { if_error(nvind,nbtab,aumoins1); majIND(&nvind,nbtab,&aumoins1,0); inserer((yyvsp[-2].n)); create("=",(yyvsp[0].n)," ",(yyvsp[-2].n)); }
 #line 1387 "ffff.tab.c" /* yacc.c:1646  */
     break;
 
   case 34:
 #line 70 "ffff.y" /* yacc.c:1646  */
-    { inserer((yyvsp[-2].n)); create("=",(yyvsp[0].n)," ",(yyvsp[-2].n));}
+    { if_error(nvind,nbtab,aumoins1); majIND(&nvind,nbtab,&aumoins1,0); inserer((yyvsp[-2].n)); create("=",(yyvsp[0].n)," ",(yyvsp[-2].n));}
 #line 1393 "ffff.tab.c" /* yacc.c:1646  */
     break;
 
@@ -1763,7 +1763,7 @@ int yyerror(char* msg){
 void if_error(int nvind,int nbtab,int aumoins1)
 {
 	if(nvind != nbtab && aumoins1==0)
-		{ yyerror("Tabulation ou espace attendu apres les ':' ");
+		{ yyerror("Tabulation attendu apres les ':' ");
 	}
 }
 void majIND(int* nvind,int nbtab,int* aumoins1,int intab)
@@ -1793,15 +1793,15 @@ yyparse();
 fclose(yyin);
 printf("\n\n");
 afficher();
+quad_fin();
 printf("\n \n");
 printf("------------- AFFICHER LES QUAD (avant opti)----------------------- ");
 printf("\n\n");
 afficherQuad();
 printf("\n\n");
-optimisation2_propagation_expression();
 printf("------------- AFFICHER LES QUAD (apres opti)----------------------- ");
 printf("\n\n");
-afficherQuad();
+optimiser();
 int t = taille();
 assembler(t);
 

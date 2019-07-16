@@ -1,13 +1,18 @@
-Ojjsd = Plkjd
-#sjdksqql kqdks 
-int Xx =0,Yy, Zz= 95+354
-if(Lo == 9) :
-	int Ol = (-66)
+#  Test TP compilation IV
+int Ivpr1 = 2019
+int PromoIv = 2019
+int Ivpromo = 2019
+
+Ivfirst  =  2016
+Ivpr18   =  Ivfirst +2
+Ivpr19   = 18 + 1
+Ivpr19   = Ivpr18 + 1
+
+if (Ivpromo == Ivpr19):
+	Bestpr = 1
+	Ivpr19my = 1/2*S1 + 1/2*S2
 else :
-	if(5>6):
-		Tfd = Yy
-	else :
-		Tpp = Yy
-At=Zz
-OMM = Ma
-#jygjh hgj
+	Ivpr20 = Ivfirst + 4
+	if (Ivpromo >= Ivpr20):
+		if (Ivpromo > Ivpr19) : 
+			Ivpromo = 2019

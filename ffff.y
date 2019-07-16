@@ -51,7 +51,7 @@ sa : saut {printf(" nvind %d nbtab %d aumoins1 %d \n",nvind,nbtab,aumoins1); nbt
 } 
 ;
 TABU : tab { if(aumoins1==0 && nvind ==0) { yyerror("Tabulation inattendu "); }else
-{if(nvind != nbtab && aumoins1==0){ yyerror("Tabulation ou espace attendu apres les ':' ");}else { if(nvind !=0 && aumoins1==0 && nbtab==nvind)aumoins1=1;} }
+{if(nvind != nbtab && aumoins1==0 && nvind >0){ yyerror("Tabulation attendu apres les ':' ");}else { if(nvind !=0 && aumoins1==0 && nbtab==nvind)aumoins1=1;} }
 majIND(&nvind,nbtab,&aumoins1,1); }
 ;
 DEC : mc_int VARS {  if_error(nvind,nbtab,aumoins1); majIND(&nvind,nbtab,&aumoins1,0);}
@@ -106,7 +106,7 @@ int yyerror(char* msg){
 void if_error(int nvind,int nbtab,int aumoins1)
 {
 	if(nvind != nbtab && aumoins1==0)
-		{ yyerror("Tabulation ou espace attendu apres les ':' ");
+		{ yyerror("Tabulation attendu apres les ':' ");
 	}
 }
 void majIND(int* nvind,int nbtab,int* aumoins1,int intab)
@@ -136,15 +136,15 @@ yyparse();
 fclose(yyin);
 printf("\n\n");
 afficher();
+quad_fin();
 printf("\n \n");
 printf("------------- AFFICHER LES QUAD (avant opti)----------------------- ");
 printf("\n\n");
 afficherQuad();
 printf("\n\n");
-optimisation2_propagation_expression();
 printf("------------- AFFICHER LES QUAD (apres opti)----------------------- ");
 printf("\n\n");
-afficherQuad();
+optimiser();
 int t = taille();
 assembler(t);
 

@@ -113,6 +113,20 @@ void majBR_vide()
 
 }
 
+// maj des brachements vides
+void quad_fin()
+{
+	int i;
+    for(i=0;i<ind;i++)
+		{
+			if(qu[i].opr[0]=='B' && strcmp(qu[i].op1,"")==0)
+			{
+				strcpy(qu[i].op1,convert(ind));
+			}
+		}
+
+}
+
 // code : assembleur
 
 void assembler(int CptabSym){
@@ -264,6 +278,7 @@ void assembler(int CptabSym){
 	fprintf(f,"END MAIN\n");
 }
 
+//optimisation 
 
 void simplfyMulti(){
 	int i;
@@ -307,36 +322,77 @@ int utiliser(int i,int j,char * temp){
 		 return besoin;
 }
 
+
+int isBranchement(char *opr){
+        
+        if(strcmp(opr,"BR")==0 ||strcmp(opr,"BLE")==0 || strcmp(opr,"BL")==0 || strcmp(opr,"BG")==0 || strcmp(opr,"BGE")==0 || strcmp(opr,"BE")==0 || strcmp(opr,"BNE")==0 ) 
+        return 1;
+ 
+        else return 0;
+
+}
+
 // sup toutes affectation non utilisée
-void suppAffNutil(){
+int suppAffNutil(){
  int i,j,used,fini,p;
  char *temp;
+ int booleen=0,indicateur; // tant qu il ya des changement boucler
+ 
+
  for(i=0;i<ind;i++){
+	
+		indicateur =0;
 		 if(strcmp(qu[i].opr,"=")==0){
 			 j=i+1;
 			  //j permet de voir si on va utiliser le resultat de la'affectation dans les prochains quadruplets
 			 temp = strdup(qu[i].res);
 			 used=utiliser(i,j,temp);
 			 if( used == 0 ){ //si le resultat n'a pas été utilisé donc on supprime le quad
-				 fini=0;
+				 fini=0; indicateur=1;int nbrDecalages;
 				 //p permet de revenir en arriere pour ecraser les quads non utils
 				 p=i;
 				 while( (p>0) && (fini==0) ){
-					 if( (strcmp(qu[p-1].opr,"+")==0) || (strcmp(qu[p-1].opr,"-")==0) || (strcmp(qu[p-1].opr,"*")==0) || (strcmp(qu[p-1].opr,"/")==0)){
+					 if( (strcmp(qu[p-1].opr,"+")==0) || (strcmp(qu[p-1].opr,"-")==0) || (strcmp(qu[p-1].opr,"*")==0)|| 							(strcmp(qu[p-1].opr,"/")==0)){
 						 p--;
 					 }
 					 else{
 					 	fini=1;
 					 }
 				 }
-				 for(j=p;j<ind-1;j++){
-					 qu[j]=qu[j+(i-p)+1];
-				 }
-				 ind=ind-(i-p)-1;
+				 nbrDecalages=i-p+1;
+				 for(j=p;j<ind-nbrDecalages+1;j++) qu[j]=qu[j+nbrDecalages];
+                                                               
+                                ind-=nbrDecalages;
+                                // MAJ des réferences de branchements
+                                for(j=0;j<ind;j++){
+                                        if(isBranchement(qu[j].opr)){ // si ce quad est un branchement , il faut màj l'indice auquel ilfait brancher
+                                                if(atoi(qu[j].op1)>=p){
+                                                        char newBranchement[10]; sprintf(newBranchement,"%d",(atoi(qu[j].op1)-nbrDecalages));
+                                                        strcpy(qu[j].op1,newBranchement);
+
+                                                }                                         
+                                        }
+                                }
+                                //for(int k=qc;k<qc+nbrDecalages;k++) vider(k);
+                                i-=nbrDecalages;
+				 //ind=ind-(i-p)-1;
 			 }
-		 }
- }
+		
+ 		}
+	
+    }
+    if(indicateur == 0) return 0;
+    return 1;
 }
+
+void appelSuppAffNutil(){
+	int a=1;
+	a = suppAffNutil();
+	while(a==1){
+		a=suppAffNutil();
+	}
+}
+
 
 void optimisation_propagation_copie(){
 int i,k;
@@ -359,6 +415,7 @@ for(i=0;i<ind;i++) //***remplire la table pile copie avec les copies qui existen
   }
 }
 }
+
 
 void inserer_quad(int j,int debut,int cpt,char* var){
 
@@ -480,4 +537,13 @@ for(m=0;m<ind;m++)
 
 
 }
+}
+
+
+void optimiser(){
+	suppAffNutil();
+	//SuppressionCodeInutile();
+	optimisation_propagation_copie();
+	optimisation2_propagation_expression();
+	afficherQuad();
 }
