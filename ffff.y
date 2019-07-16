@@ -113,7 +113,8 @@ void majIND(int* nvind,int nbtab,int* aumoins1,int intab)
 	if (intab==1)
 	{
 		if( nbtab < *nvind && aumoins1 != 0)	
-			{ printf(" %d ",nbtab); *nvind--; *aumoins1=0;  }
+			{ /*printf(" %d ",nbtab);*/
+			 *nvind--; *aumoins1=0;  }
 	}else
 	{
 	if( nbtab ==0 && nvind != 0 && aumoins1 != 0 && majVide==0)	
@@ -139,7 +140,7 @@ printf("------------- AFFICHER LES QUAD (avant opti)----------------------- ");
 printf("\n\n");
 afficherQuad();
 printf("\n\n");
-optimisation_propagation_copie();
+optimisation2_propagation_expression();
 printf("------------- AFFICHER LES QUAD (apres opti)----------------------- ");
 printf("\n\n");
 afficherQuad();

@@ -2,8 +2,9 @@ Ojjsd = Plkjd
 #sjdksqql kqdks 
 int Xx =0,Yy, Zz= 95+354
 if(Lo == 9) :
-	if( 98<5) :
-		OMM = Maa
+	int Ol = (-66)
+else :
+	Tfd = Yy
 At=Zz
 OMM = Ma
 #jygjh hgj

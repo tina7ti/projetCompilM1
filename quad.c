@@ -359,3 +359,125 @@ for(i=0;i<ind;i++) //***remplire la table pile copie avec les copies qui existen
   }
 }
 }
+
+void inserer_quad(int j,int debut,int cpt,char* var){
+
+int indx=ind-1;int i,l;
+  //***********************decalage de n position avec n=cpt
+while(indx>=j)
+{  i=indx+cpt;
+   qu[i].opr=strdup(qu[indx].opr);
+   qu[i].op1=strdup(qu[indx].op1);
+   qu[i].op2=strdup(qu[indx].op2);
+   qu[i].res=strdup(qu[indx].res);
+   indx--;
+}
+//*********************insertion de n quad(n=cpt) à la position j//
+
+for(l=0;l<cpt;l++)
+{
+   qu[j].opr=strdup(qu[debut].opr);
+   qu[j].op1=strdup(qu[debut].op1);
+   qu[j].op2=strdup(qu[debut].op2);
+   qu[j].res=strdup(qu[debut].res);
+   j++;debut++;
+}
+//***********************mise a jour sur le quad de l'aff ayant la//
+if(strcmp(qu[j].op1,var)==0)
+    {
+       qu[j].op1=strdup(qu[j-1].res);
+	}
+if(strcmp(qu[j].op2,var)==0)
+    {
+		qu[j].op2=strdup(qu[j-1].res);
+	}
+//***********************mise ajour ind =nbr quad//
+
+
+ind=ind+cpt;
+
+
+}
+
+
+
+int f_numeric(char* a)
+{
+ if(a[0]=='0' || a[0]=='1'|| a[0]=='2' || a[0]=='3'|| a[0]=='4' || a[0]=='5' || a[0]=='6' ||a[0]=='7' || a[0]=='8'||a[0]=='9')
+       { return 1;}
+
+    return 0;
+
+}
+
+
+void mise_ajour_adr(int i,int cpt)
+{
+
+ int j,x;
+    for(j=0;j<ind;j++){
+        if(qu[j].opr[0]=='B'){
+                x=atoi(qu[j].op1);
+            if(x >i){
+
+             x=x+cpt;
+             sprintf(qu[j].op1,"%d",x);
+            }
+        }
+    }
+
+
+  }
+
+
+void optimisation2_propagation_expression()
+{
+int i=0; int cpt;int debut,boolean;char* var;int j;
+  int m; int k;
+for(m=0;m<ind;m++)
+{ boolean=0;cpt=0;
+
+   i=m;
+  if(qu[i].opr[0]=='+' ||  qu[i].opr[0]=='*'  ||  qu[i].opr[0]=='/'  || qu[i].opr[0]=='-' )
+   {
+	    if (f_numeric(qu[i].op1)==1  && f_numeric(qu[i].op2)==1)
+        {
+            while( i<ind && qu[i].opr[0]!='=' && (qu[i].opr[0]=='+' ||  qu[i].opr[0]=='*'
+                                                    ||  qu[i].opr[0]=='/'  || qu[i].opr[0]=='-' )
+             && (f_numeric(qu[i].op1)==1 || qu[i].op1[0]=='T' ) &&
+	         (f_numeric(qu[i].op2)==1 ||  qu[i].op2[0]=='T'  ))
+                    {  if(boolean==0){debut=i;boolean=1;}
+
+                         cpt++;i++;
+	                }
+			m=i;
+
+			if(qu[i].opr[0]=='=')
+            {
+                var=strdup(qu[i].res);
+
+                j=i+1;
+
+
+      while((j<ind)&&(strcmp(qu[j].res,var)!=0))
+	  {
+
+
+			  if(strcmp(qu[j].op1,var)==0 || strcmp(qu[j].op2,var)==0 )
+                  {
+					  inserer_quad(j,debut,cpt,var);
+					  mise_ajour_adr(j,cpt);
+
+
+				  }
+
+         j++;
+	  }
+    }
+
+}
+   }
+
+
+}
+}

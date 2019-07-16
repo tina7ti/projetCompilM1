@@ -21,3 +21,6 @@ void simplfyMulti();
 int utiliser(int i,int j,char * temp);
 void suppAffNutil();
 void optimisation_propagation_copie();
+void mise_ajour_adr(int i,int cpt);
+void optimisation2_propagation_expression();
+int f_numeric(char* a);

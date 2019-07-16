@@ -4,9 +4,10 @@ Plkjd DD ?
 Xx DD ?
 Yy DD ?
 Zz DD ?
-OMM DD ?
-Maa DD ?
+Ol DD ?
+Tfd DD ?
 At DD ?
+OMM DD ?
 Ma DD ?
 DATA ENDS
 CODE SEGEMENt
@@ -22,12 +23,13 @@ etiq3 : MOV Zz, AX
 etiq4 : MOV AX, Lo
 	CMP AX, 9
 	JNE etiq7
-etiq5 : MOV AX, 98
-	CMP AX, 5
-	JGE etiq7
-etiq6 : MOV OMM, Maa
-etiq7 : MOV At, AX
-etiq8 : MOV OMM, Ma
+etiq5 : MOV Ol, -66
+etiq6 : JMP etiq8
+etiq7 : MOV Tfd, Yy
+etiq8 : MOV AX, 95
+	 ADD AX, 354
+etiq9 : MOV At, AX
+etiq10 : MOV OMM, Ma
 FIN :
 MOV AH,4CH
 INt 21h
