@@ -14,6 +14,7 @@ extern int col;
 extern int nbtab;
 extern int nvind;
 extern int majVide;
+extern int nbelse;
 int nbinst=0,ielse,ielif,iBR=0,inif=0;
 int tabBR[20];
 char* sauvComp="";
@@ -53,7 +54,7 @@ TABU : tab { if(aumoins1==0 && nvind ==0) { yyerror("Tabulation inattendu "); }e
 {if(nvind != nbtab && aumoins1==0){ yyerror("Tabulation ou espace attendu apres les ':' ");}else { if(nvind !=0 && aumoins1==0 && nbtab==nvind)aumoins1=1;} }
 majIND(&nvind,nbtab,&aumoins1,1); }
 ;
-DEC : mc_int VARS 
+DEC : mc_int VARS {  if_error(nvind,nbtab,aumoins1); majIND(&nvind,nbtab,&aumoins1,0);}
 ;
 VARS : idf { inserer($1); }
 	| VARS ',' idf { inserer($3); }
@@ -65,8 +66,8 @@ MEMdr : idf {inserer($1);} | entier | EXP
 COMMENTS : comment sa | comment | comment COMMENTS
 ;
 AFFEC : idf '=' idf {  if_error(nvind,nbtab,aumoins1); majIND(&nvind,nbtab,&aumoins1,0); inserer($1); inserer($3); create("=",$3," ",$1); } 
-	| idf '=' entier { inserer($1); create("=",$3," ",$1); } 
-	| idf '=' EXP { inserer($1); create("=",$3," ",$1);} 
+	| idf '=' entier { if_error(nvind,nbtab,aumoins1); majIND(&nvind,nbtab,&aumoins1,0); inserer($1); create("=",$3," ",$1); } 
+	| idf '=' EXP { if_error(nvind,nbtab,aumoins1); majIND(&nvind,nbtab,&aumoins1,0); inserer($1); create("=",$3," ",$1);} 
 ;
 COND : IF_SEUL | IF_ELSE | IF_ELIF
 ; 

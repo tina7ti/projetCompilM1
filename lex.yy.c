@@ -526,7 +526,7 @@ char *yytext;
 #include "fonct.h"
 #include "quad.h"
 extern YYSTYPE yylval;
-int line=1,col=1,nbtab=0,nvind=0,majVide=0;
+int line=1,col=1,nbtab=0,nvind=0,majVide=0,nbelse=0;
 char* p1;
 char ss[50]={ 0 };
 #line 533 "lex.yy.c"
@@ -819,7 +819,7 @@ YY_RULE_SETUP
 case 3:
 YY_RULE_SETUP
 #line 28 "lex.l"
-{col+=yyleng; return mc_else;}
+{col+=yyleng; nbelse++; return mc_else;}
 	YY_BREAK
 case 4:
 YY_RULE_SETUP

@@ -4,7 +4,10 @@ int Xx =0,Yy, Zz= 95+354
 if(Lo == 9) :
 	int Ol = (-66)
 else :
-	Tfd = Yy
+	if(5>6):
+		Tfd = Yy
+	else :
+		Tpp = Yy
 At=Zz
 OMM = Ma
 #jygjh hgj
