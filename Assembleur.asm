@@ -21,10 +21,10 @@ etiq2 : MOV AX, 95
 etiq3 : MOV Zz, AX
 etiq4 : MOV AX, Lo
 	CMP AX, 9
-	JNE etiq
-etiq5 : MOV AX, Lp
-	CMP AX, 6
-	JGE etiq
+	JNE etiq7
+etiq5 : MOV AX, 98
+	CMP AX, 5
+	JGE etiq7
 etiq6 : MOV OMM, Maa
 etiq7 : MOV At, AX
 etiq8 : MOV OMM, Ma

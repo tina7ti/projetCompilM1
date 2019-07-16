@@ -526,7 +526,7 @@ char *yytext;
 #include "fonct.h"
 #include "quad.h"
 extern YYSTYPE yylval;
-int line=1,col=1,nbtab=0,nvind=0;
+int line=1,col=1,nbtab=0,nvind=0,majVide=0;
 char* p1;
 char ss[50]={ 0 };
 #line 533 "lex.yy.c"
@@ -809,7 +809,7 @@ do_action:	/* This label is used only to access EOF actions. */
 case 1:
 YY_RULE_SETUP
 #line 26 "lex.l"
-{  col+=yyleng; nvind++; return mc_if;}
+{  col+=yyleng; nvind++; majVide=0; return mc_if;}
 	YY_BREAK
 case 2:
 YY_RULE_SETUP
@@ -962,7 +962,7 @@ case 31:
 /* rule 31 can match eol */
 YY_RULE_SETUP
 #line 58 "lex.l"
-{col=1; line+=yyleng; nbtab=0; return saut; }
+{col=1; line+=yyleng; return saut; }
 	YY_BREAK
 case 32:
 YY_RULE_SETUP

@@ -25,3 +25,4 @@ void afficher ();
 void indext(int indx,int esp,int aumoins1);
 int taille();
 
+

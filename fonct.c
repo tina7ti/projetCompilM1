@@ -62,3 +62,5 @@ int taille()
 	return CpTabSym;
 }
 
+
+

@@ -6,7 +6,7 @@
 #include "fonct.h"
 #include "quad.h"
 extern YYSTYPE yylval;
-int line=1,col=1,nbtab=0,nvind=0;
+int line=1,col=1,nbtab=0,nvind=0,majVide=0;
 char* p1;
 char ss[50]={ 0 };
 %}
@@ -23,7 +23,7 @@ tab ("\t")+
 saut ("\n")+
 
 %%
-if {  col+=yyleng; nvind++; return mc_if;}
+if {  col+=yyleng; nvind++; majVide=0; return mc_if;}
 elif {col+=yyleng; return mc_elif; }
 else {col+=yyleng; return mc_else;}
 while {col+=yyleng; return mc_while;}
@@ -55,7 +55,7 @@ and {return and;}
 {comment} {yylval.n=strdup(yytext); return comment;}
 {espace} {col+=yyleng;}
 {tab} {col+=yyleng; nbtab+=yyleng; yylval.n=strdup(yytext); return tab;}
-{saut} {col=1; line+=yyleng; nbtab=0; return saut; }
+{saut} {col=1; line+=yyleng; return saut; }
 
 . {printf("erreur lexicale : \" %s \" \n ligne : %d colonne : %d \n",yytext,line,col); yyterminate();}
 %%

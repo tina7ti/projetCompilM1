@@ -99,6 +99,19 @@ void afficherQuad()
         }
     printf("\n*********** FIN Quadruplet *************\n");
 }
+// maj des brachements vides
+void majBR_vide()
+{
+	int i;
+    for(i=0;i<ind;i++)
+		{
+			if(qu[i].opr[0]=='B' && strcmp(qu[i].op1,"")==0)
+			{
+				strcpy(qu[i].op1,convert(ind));
+			}
+		}
+
+}
 
 // code : assembleur
 

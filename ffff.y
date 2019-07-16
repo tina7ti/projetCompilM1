@@ -7,10 +7,13 @@ extern FILE* yyin;
 #include "quad.c"
 int yylex();
 int yyerror(char * msg);
+void if_error(int nvind,int nbtab,int aumoins1);
+void majIND(int* nvind,int nbtab,int* aumoins1,int intab);
 extern int line;
 extern int col;
 extern int nbtab;
 extern int nvind;
+extern int majVide;
 int nbinst=0,ielse,ielif,iBR=0,inif=0;
 int tabBR[20];
 char* sauvComp="";
@@ -40,16 +43,17 @@ struct {int type;char* val;}NT;
 %%
 S : INST {printf(" \n programme syntaxiquement juste \n");YYACCEPT;}
 ;
-INST : DEC INST | AFFEC INST | EXP INST | COND INST | DEC | AFFEC | EXP | COND | sa INST | sa | COMMENTS 
+INST : DEC sa INST | AFFEC sa INST | COND INST | DEC | AFFEC | COND | sa INST | sa | COMMENTS 
 	| COMMENTS INST | TABU DEC INST | TABU DEC | TABU AFFEC INST | TABU AFFEC | TABU COND INST | TABU COND
 ;
-sa : saut {printf(" nvind %d nbtab %d aumoins1 %d \n",nvind,nbtab,aumoins1); if(nvind != nbtab && aumoins1==0){ yyerror("Tabulation ou espace attendu apres les ':' ");}else{ if(nbtab == nvind-1 && aumoins1 !=0){ nvind--; aumoins1=0;  } }
+sa : saut {printf(" nvind %d nbtab %d aumoins1 %d \n",nvind,nbtab,aumoins1); nbtab=0;
 } 
 ;
 TABU : tab { if(aumoins1==0 && nvind ==0) { yyerror("Tabulation inattendu "); }else
-{if(nvind != nbtab && aumoins1==0){ yyerror("Tabulation ou espace attendu apres les ':' ");}} }
+{if(nvind != nbtab && aumoins1==0){ yyerror("Tabulation ou espace attendu apres les ':' ");}else { if(nvind !=0 && aumoins1==0 && nbtab==nvind)aumoins1=1;} }
+majIND(&nvind,nbtab,&aumoins1,1); }
 ;
-DEC : mc_int VARS sa 
+DEC : mc_int VARS 
 ;
 VARS : idf { inserer($1); }
 	| VARS ',' idf { inserer($3); }
@@ -60,10 +64,9 @@ MEMdr : idf {inserer($1);} | entier | EXP
 ;
 COMMENTS : comment sa | comment | comment COMMENTS
 ;
-AFFEC : idf '=' idf {if(nvind != nbtab && aumoins1==0){ yyerror("Tabulation ou espace attendu apres les ':' ");}else{if(nvind!=0) aumoins1 =1;} inserer($1); inserer($3); create("=",$3," ",$1); }
-	| idf '=' idf { if(nvind != nbtab && aumoins1==0){ yyerror("Tabulation ou espace attendu apres les ':' ");}else{if(nvind!=0) aumoins1 =1;} inserer($1); inserer($3); create("=",$3," ",$1); } 
-	| idf '=' entier {if(nvind != nbtab && aumoins1==0){ yyerror("Tabulation ou espace attendu apres les ':' ");}else{if(nvind!=0) aumoins1 =1;} } sa { inserer($1); create("=",$3," ",$1); } 
-	| idf '=' EXP {if(nvind != nbtab && aumoins1==0){ yyerror("Tabulation ou espace attendu apres les ':' ");}else{if(nvind!=0) aumoins1 =1;} } sa { inserer($1); create("=",$3," ",$1);} 
+AFFEC : idf '=' idf {  if_error(nvind,nbtab,aumoins1); majIND(&nvind,nbtab,&aumoins1,0); inserer($1); inserer($3); create("=",$3," ",$1); } 
+	| idf '=' entier { inserer($1); create("=",$3," ",$1); } 
+	| idf '=' EXP { inserer($1); create("=",$3," ",$1);} 
 ;
 COND : IF_SEUL | IF_ELSE | IF_ELIF
 ; 
@@ -98,6 +101,30 @@ int yyerror(char* msg){
 
 	printf("%s : ligne : %d , colonne : %d\n",msg,line,col);
 	exit(EXIT_FAILURE);
+}
+void if_error(int nvind,int nbtab,int aumoins1)
+{
+	if(nvind != nbtab && aumoins1==0)
+		{ yyerror("Tabulation ou espace attendu apres les ':' ");
+	}
+}
+void majIND(int* nvind,int nbtab,int* aumoins1,int intab)
+{
+	if (intab==1)
+	{
+		if( nbtab < *nvind && aumoins1 != 0)	
+			{ printf(" %d ",nbtab); *nvind--; *aumoins1=0;  }
+	}else
+	{
+	if( nbtab ==0 && nvind != 0 && aumoins1 != 0 && majVide==0)	
+			{
+	*nvind = 0;
+	*aumoins1=0;
+	majBR_vide();
+	majVide =1;
+	}
+	}
+	
 }
 int main()
 {
