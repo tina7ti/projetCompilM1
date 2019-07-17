@@ -14,11 +14,9 @@ extern int col;
 extern int nbtab;
 extern int nvind;
 extern int majVide;
-extern int nbelse;
-int nbinst=0,ielse,ielif,iBR=0,inif=0;
-int tabBR[20];
+int nbinst=0,ielse,ielif,inif=0;
 char* sauvComp="";
-int ntemp=1; char tempC[12]=""; 
+int ntemp=1; 
 int aumoins1=0;
 %}
 
@@ -47,8 +45,6 @@ S : INST {printf(" \n programme syntaxiquement juste \n");YYACCEPT;}
 INST : DEC sa INST | AFFEC sa INST | COND INST | DEC | AFFEC | COND | sa INST | sa | COMMENTS 
 	| COMMENTS INST | TABU DEC INST | TABU DEC | TABU AFFEC INST | TABU AFFEC | TABU COND INST | TABU COND
 ;
-sa : saut { nbtab=0;}
-;
 TABU : tab { if(aumoins1==0 && nvind ==0) { yyerror("Tabulation inattendu "); }else
 {if(nvind != nbtab && aumoins1==0 && nvind >0){ yyerror("Tabulation attendu apres les ':' ");}else { if(nvind !=0 && aumoins1==0 && nbtab==nvind)aumoins1=1;} }
 majIND(&nvind,nbtab,&aumoins1,1); }
@@ -68,13 +64,20 @@ AFFEC : idf '=' idf {  if_error(nvind,nbtab,aumoins1); majIND(&nvind,nbtab,&aumo
 	| idf '=' entier { if_error(nvind,nbtab,aumoins1); majIND(&nvind,nbtab,&aumoins1,0); inserer($1); create("=",$3," ",$1); } 
 	| idf '=' EXP { if_error(nvind,nbtab,aumoins1); majIND(&nvind,nbtab,&aumoins1,0); inserer($1); create("=",$3," ",$1);} 
 ;
-COND : IF_SEUL | IF_ELSE | IF_ELIF
+COND : IF_ELSE | IF_ELIF | IF_ELIF_PLU
 ; 
-IF_SEUL : mc_if '(' COMP ')' ':' sa INST { }
+IF_ELSE : mc_if '(' COMP ')' ':' sa INST A
 ;
-IF_ELSE : mc_if '(' COMP ')' ':' sa INST mc_else ':' sa {create("BR","","",""); tabBR[iBR]=ind-1; iBR++; ielse = ind; quadFinIF_else(ielse);} INST {  } 
+IF_ELIF : mc_if '(' COMP ')' ':' sa INST mc_elif { create("BR","","",""); ielif = ind; quadFinIF_else(ielif);} '(' COMP ')' ':' sa INST mc_else ':' sa {create("BR","","",""); ielse = ind; quadFinIF_else(ielse);} INST {  }
 ;
-IF_ELIF : mc_if '(' COMP ')' ':' sa INST mc_elif { create("BR","","",""); tabBR[iBR]=ind-1; iBR++; ielif = ind; quadFinIF_else(ielif);} '(' COMP ')' ':' sa INST mc_else ':' sa {create("BR","","",""); tabBR[iBR]=ind-1; iBR++; ielse = ind; quadFinIF_else(ielse);} INST {  }
+IF_ELIF_PLU :  mc_if '(' COMP ')' ':' sa INST ELI A 
+;
+A : mc_else ':' sa {create("BR","","",""); ielse = ind; quadFinIF_else(ielse);} INST
+	| 
+;
+ELI : B	| B ELI 
+;
+B : mc_elif { create("BR","","",""); ielif = ind; quadFinIF_else(ielif);} '(' COMP ')' ':' sa INST 
 ;
 COMP : idf CO idf {  quadComp(sauvComp,$1,$3); }
 	| idf CO entier {  quadComp(sauvComp,$1,$3);}
@@ -95,7 +98,8 @@ EXP : EXP add EXP {$1=strdup($$);sprintf($$, "t%d", ntemp); create("+",$1,$3,$$)
 	| idf { sprintf($$,"%s",$1); }
 	| entier { sprintf($$,"%s",$1); }
 ;
-
+sa : saut { nbtab=0;}
+;
 %%
 int yyerror(char* msg){
 

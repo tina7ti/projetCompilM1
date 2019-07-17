@@ -1,34 +1,34 @@
 DATA SEGMENt 
-Ivpr1 DD ?
-PromoIv DD ?
-Ivpromo DD ?
-Ivfirst DD ?
-Ivpr18 DD ?
-Ivpr19 DD ?
-Bestpr DD ?
-Ivpr19my DD ?
-Ivpr20 DD ?
+Uyhd DD ?
+Xx DD ?
+Yy DD ?
+Zz DD ?
+Aa DD ?
+Bb DD ?
+Pxe DD ?
 DATA ENDS
-CODE SEGEMENt
+CODE SEGEMENT
 ASSUME CS:CODE, DS:DATA
 MAIN :
-MOV AX,DATA
-MOV DS,AX
-etiq0 : MOV Ivpromo, 2019
-etiq1 : MOV Ivfirst, 2016
-etiq2 : MOV AX, 2016
-	 ADD AX, 2
-etiq3 : MOV Ivpr18, AX
-etiq4 : MOV AX, 2019
-	CMP AX, Ivpr19
-	JNE etiq4
-etiq5 : JMP etiq8
-etiq6 : MOV AX, 2019
-CMP AX, Ivpr20
-	JL etiq8
-etiq7 : MOV AX, 2019
-	CMP AX, Ivpr19
-	JLE etiq8
+etiq0 : MOV Zz, 2
+etiq1 : MOV AX, Pob
+	CMP AX, 6
+	JGE etiq5
+etiq2 : MOV AX, 77
+	CMP AX, 77
+	JNE etiq5
+etiq3 : MOV AX, 4
+	 ADD AX, 4
+etiq4 : ADD AX, 4
+etiq5 : MOV Zz, AX
+etiq6 : MOV AX, 321
+	CMP AX, Zz
+	JE etiq8
+etiq7 : JMP etiq10
+etiq8 : MOV AX, Mlk
+CMP AX, 5
+	JL etiq9
+etiq9 : JMP etiq10
 FIN :
 MOV AH,4CH
 INt 21h
